@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora Gix</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff3b3b, #ff8c00);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .card {
+        background: #ffffff;
+        width: 320px;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #ff3b3b;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        color: #555;
+    }
+
+    input {
+        width: 100%;
+        padding: 14px;
+        margin-top: 8px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: #ff8c00;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 14px;
+        background: linear-gradient(135deg, #ff3b3b, #ff8c00);
+        color: #fff;
+        border: none;
+        border-radius: 14px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    .result {
+        margin-top: 25px;
+        background: #f7f7f7;
+        border-radius: 14px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .result span {
+        display: block;
+        font-size: 14px;
+        color: #777;
+    }
+
+    .result strong {
+        font-size: 26px;
+        color: #ff3b3b;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .footer {
+        margin-top: 15px;
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="title">Calculadora Gix</div>
+
+    <label for="pulsos">Pulsos da máquina</label>
+    <input type="number" id="pulsos" placeholder="Ex: 9932">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div class="result">
+        <span>Resultado Gix (900 ml)</span>
+        <strong id="resultado">0</strong>
+    </div>
+
+    <div class="footer">
+        1 pulso = 0,154 ml<br>
+        1 Gix = 900 ml
+    </div>
+</div>
+
+<script>
+function formatarNumero(valor) {
+    const inteiro = Math.floor(valor);
+    const decimal = valor - inteiro;
+
+    if (decimal === 0) {
+        return inteiro.toString();
+    }
+
+    // Verifica se com 2 casas já é exato
+    const duasCasas = Number(valor.toFixed(2));
+    if (Math.abs(valor - duasCasas) < 0.00001) {
+        return duasCasas.toFixed(2);
+    }
+
+    // Caso contrário, mostra até 4 casas sem arredondar
+    return Math.floor(valor * 10000) / 10000;
+}
+
+function calcular() {
+    const pulsos = document.getElementById("pulsos").value;
+
+    if (pulsos === "" || pulsos <= 0) {
+        document.getElementById("resultado").innerText = "0";
+        return;
+    }
+
+    const gix = (pulsos * 0.154) / 900;
+    document.getElementById("resultado").innerText = formatarNumero(gix);
+}
+</script>
+
+</body>
+</html>
